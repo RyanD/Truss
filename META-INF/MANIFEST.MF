@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Created-By: 1.4.2_05 (Apple Computer, Inc.)
+Main-Class: org.eastmanhouse.ejp.Truss
+
+Name: org/eastmanhouse/ejp
+Specification-Title: Truss
+Specification-Version: 1.0
+Specification-Vendor: Eastmanhouse
+Implementation-Vendor-Id: org.eastmanhouse
+Implementation-Version: 1.0
+Implementation-Vendor: Eastmanhouse
