@@ -22,11 +22,15 @@
 
 
    <target name="dist" depends="compile" description="generate the distribution">
-      <echo>Building JAR</echo>
+      <echo>Building EJP...</echo>
       <jar jarfile="${dist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>
-      <jar jarfile="${localDist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>
-   </target>
 
+   </target>
+	
+   <target name="install" depends="compile" description="installs into appropriate location">
+	  <echo>Installing EJP...</echo>
+      <jar jarfile="${localDist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>   
+   </target>
 
    <target name="doc" description="Generate javadocs">
       <mkdir dir="${doc}"/>
