@@ -17,19 +17,21 @@
 
    <target name="compile" depends="init" description="compile the source">
       <echo>Compiling</echo>
-      <javac srcdir="${src}" classpath=".:\Applications\Cumulus Client\Cumulus.app\Contents\MacOS\EJPManager\lib\CumulusJC.jar:\Applications\Cumulus Client\Cumulus.app\Contents\MacOS\EJPManager\lib\EJPManager.jar" destdir="${build}" includes="*.java" debug="on"/>
+
+      <javac srcdir="${src}" classpath=".:\Applications\Cumulus Client\Cumulus.app\Contents\MacOS\EJPManager\lib\CumulusJC.jar:\Applications\Cumulus Client\Cumulus.app\Contents\MacOS\EJPManager\lib\EJPManager.jar" destdir="${build}" includes="*.java" debug="on">
+	  	  <compilerarg value="-Xlint" />
+		  </javac>
    </target>
 
 
    <target name="dist" depends="compile" description="generate the distribution">
       <echo>Building EJP...</echo>
-      <jar jarfile="${dist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>
-
+      <jar jarfile="${localDist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>
    </target>
 	
    <target name="install" depends="compile" description="installs into appropriate location">
 	  <echo>Installing EJP...</echo>
-      <jar jarfile="${localDist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>   
+      <jar jarfile="${dist}/truss.ejp" basedir="${build}"  manifest="META-INF/MANIFEST.MF"/>   
    </target>
 
    <target name="doc" description="Generate javadocs">
