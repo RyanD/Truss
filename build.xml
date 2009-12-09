@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="Truss" default="dist" basedir=".">
 
-   <property name="src" value="src"/>
+   <property name="src" value="org/eastmanhouse/ejp"/>
    <property name="build" value="build"/>
    <property name="dist" value="/Applications/Cumulus Client/Cumulus.app/Contents/MacOS/ejp/"/>
    <property name="localDist" value="dist"/>
