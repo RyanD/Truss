@@ -1,0 +1,87 @@
+package org.eastmanhouse.ejp;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+
+/**
+ * TrussWindow opens a window from which selected records in a Cumulus client
+ * can have the notes field updated with criteria from a MySQL database.
+ * @author Ryan Donahue
+ * @version 1.0, March 2009
+ */
+
+public class TrussWindow extends JFrame implements Runnable {
+   private JFrame window;
+   private JPanel panel;
+   private JLabel label;
+   private JProgressBar progressBar;
+   private boolean done;
+
+
+   public int numberItems;
+   private int numberDone;
+
+
+
+   /**
+    * Consturctor opens the window
+    */
+   public TrussWindow(int numberItems) {
+      super();
+   }
+
+   public void initWindow(){
+      // Set sizes, location, titles, close operation, colors
+      setTitle("Truss Building...");
+      setSize(384, 120);
+      setBackground(Color.lightGray);
+      setLocation(0, 75);
+      setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+      numberDone = 0;
+
+      label=new JLabel("Importing Data from TMS...");
+
+      progressBar = new JProgressBar(0, numberItems);
+      progressBar.setStringPainted(true);
+      progressBar.setPreferredSize(new Dimension(360,20));
+
+      panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+
+      panel.add(label);
+      panel.add(progressBar);
+
+      start();
+      
+      getContentPane().add(panel);
+      setVisible(true);
+      toFront();
+
+   }
+
+   public void start() {
+    setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+    progressBar.setValue(numberDone);
+         progressBar.setString(progressBar.getValue() + " of " + progressBar.getMaximum());
+   }
+
+   public synchronized void update(int updateBy){
+     progressBar.setValue(progressBar.getValue()+updateBy);
+     progressBar.setString(progressBar.getValue() + " of " + progressBar.getMaximum());
+     if (progressBar.getValue() == progressBar.getMaximum()){
+       setCursor(null); //turn off the wait cursor
+       progressBar.setValue(progressBar.getMinimum());
+       progressBar.setString("");
+       this.setVisible(false);
+     }
+
+   }
+
+
+
+} // END OF CLASS
