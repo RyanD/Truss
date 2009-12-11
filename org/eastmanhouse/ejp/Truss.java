@@ -10,9 +10,7 @@ import com.canto.cumulus.ui.MenuBar;
 import com.canto.cumulus.ui.MenuItem;
 import java.awt.event.ActionEvent;
 import java.util.logging.FileHandler;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 /**
  *
  * @author ryand
@@ -70,6 +68,7 @@ public class Truss extends AbstractEJP implements ActionHandler{
   }
 
 
+  @Override
   public String getID(){
     return "org.eastmanhouse.ejp.Truss";
   }
@@ -89,13 +88,10 @@ public class Truss extends AbstractEJP implements ActionHandler{
    private void _handleAction(String command) {
 
       if(command.equals("import")) {
-        beginTask();
+        TrussWorker tw = TrussWorker.getInstance();
+        tw.beginImport();
       }
    }
 
-   private void beginTask(){
-    TrussWorker tw = new TrussWorker(application);
-    new Thread(tw).start();
-   }
 
 }
