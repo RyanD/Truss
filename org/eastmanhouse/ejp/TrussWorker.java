@@ -47,6 +47,7 @@ public class TrussWorker {
   private GUID dimensions = new GUID("{6d093902-671f-7d44-b0c4-0af27f6a4a6d}");
   private GUID medium = new GUID("{8b094ab9-f251-ad41-b09b-76cc5a0a5a7f}");
   protected boolean isRunning = false;
+
   /**
    * Constructor.
    */
@@ -67,14 +68,17 @@ public class TrussWorker {
     initWindow();
 
   }
+
   /**
    * Inits the window.
    */
-
-   public static TrussWorker getInstance() {
+  public static TrussWorker getInstance() {
       return INSTANCE;
    }
 
+  /**
+   * Inits the window.
+   */
   protected void initWindow() {
     // Set sizes, location, titles, close operation, colors
     window = new JFrame("Importing Data...");
@@ -100,9 +104,8 @@ public class TrussWorker {
   }
 
   /**
-   * Begins importing
+   * Finish the import, reset the stuff.
    */
-
   protected void finishImport(){
     isRunning = false;
     window.setVisible(false);
@@ -111,6 +114,9 @@ public class TrussWorker {
     System.err.println("Done.");
   }
 
+  /**
+   * Begins importing
+   */
   protected void beginImport() {
 
     if (!isRunning){
@@ -211,8 +217,6 @@ public class TrussWorker {
         System.err.println("Attempted paralllel invokation");
       }
   }
-
-
 
   /**
    * Method to return the current selection from Cumulus
