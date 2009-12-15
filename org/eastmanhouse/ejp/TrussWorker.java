@@ -109,9 +109,12 @@ public class TrussWorker {
   protected void finishImport(){
     isRunning = false;
     window.setVisible(false);
-    progressBar.setValue(0);
+
     window.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     System.err.println("Done.");
+    Runtime r = Runtime.getRuntime();
+    r.gc();
+    System.err.println("Initing GC request...");
   }
 
   /**
@@ -149,6 +152,8 @@ public class TrussWorker {
          */
         protected void importData(Application application) {
 
+          updateProgress(0);
+
           System.err.println("ImportData running...");
           // here we go.
           ArrayList<String> accessionNumbers = new ArrayList<String>();
@@ -157,17 +162,20 @@ public class TrussWorker {
           MultiItemCollection currentCollection = getSelection();
           numberItems = currentCollection.getItemCount();
           numberDone  = 0;
-          
+
+          System.err.println("Beginning item " + numberDone++ + " of " + numberItems);
+
           for (Item item : currentCollection) {
 
             String accNumUndelim = item.getStringValue(accessionNumberUndelimited);
 
-            System.err.println("Processing " + accNumUndelim);
-
             //colonize accession number
             String accNumDelim = accNumUndelim.replaceAll("([0-9]{4})([0-9]{4})([0-9]{4})", "$1:$2:$3");
 
+            if (accNumDelim.length() >= 14){
+
             accessionNumbers.add(accNumDelim);
+
             HashMap map = getData(accNumDelim);
 
             try {
@@ -177,10 +185,12 @@ public class TrussWorker {
               item.setStringValue(dimensions, (String) map.get("dimensions"));
               item.setStringValue(medium, (String) map.get("medium"));
               item.setStringValue(accessionNumberDelimited, (String) map.get("accessionNumber"));
-
+            System.err.println("Saving...");
               item.save();
+            System.err.println("Saved..");
             } catch (Exception e) {
               System.err.println("Can't save items: " + e.getMessage());
+            }
             }
 
             numberDone++;
